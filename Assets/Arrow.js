@@ -25,6 +25,7 @@ function Update () {
   	acceleration = alpha * acceleration + (1 - alpha) * lenear_acceleration;
 
 	next_position.x = position.x + acceleration.x * 10;
-	next_position.y = position.y + acceleration.y * 10;
+	next_position.y = position.x + acceleration.y * 10;
+	next_position.z = position.z + acceleration.z * -10;
 	lineRenderer.SetPosition(1, next_position);
 }

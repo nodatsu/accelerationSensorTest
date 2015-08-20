@@ -4,7 +4,6 @@ var gravity: Vector3;
 var acceleration: Vector3;
 
 function Start() {
-	gameObject.GetComponent(UI.Text).text = "test";
 }
 
 function Update () {
@@ -15,12 +14,5 @@ function Update () {
   	
   	acceleration = alpha * acceleration + (1 - alpha) * linear_acceleration;
 
-	var str: String;
-	
-	str = "X: " + Input.acceleration.x + "\nY: " + Input.acceleration.y
-		+ "\nZ: " + Input.acceleration.z
-		+ "\n\nX: " + acceleration.x + "\nY: " + acceleration.y
-		+ "\nZ: " + acceleration.z;
-	
-	gameObject.GetComponent(UI.Text).text = str;
+	GetComponent(Rigidbody).AddForce(acceleration.x * 100, acceleration.y * 100, acceleration.z * -100, ForceMode.Acceleration);
 }
