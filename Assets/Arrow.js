@@ -19,9 +19,7 @@ function Start() {
 function Update () {
 	var alpha = 0.8;
 	gravity = alpha * gravity + (1 - alpha) * Input.acceleration;
-
   	var lenear_acceleration = Input.acceleration - gravity;
-  	
   	acceleration = alpha * acceleration + (1 - alpha) * lenear_acceleration;
 
 	next_position.x = position.x + acceleration.x * 10;
