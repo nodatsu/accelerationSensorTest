@@ -2,6 +2,7 @@
 
 var gravity: Vector3;
 var acceleration: Vector3;
+var resetTime: int;
 
 function Awake () {
 	Screen.sleepTimeout = SleepTimeout.NeverSleep;
@@ -11,6 +12,8 @@ function Start () {
 	if (Application.platform == RuntimePlatform.Android) {
 		Input.gyro.enabled = true;
 	}
+	
+	resetTime = Time.time;
 }
 
 function Update () {
@@ -20,10 +23,10 @@ function Update () {
 	}
 	else if (Application.platform == RuntimePlatform.OSXEditor) {
 		if (Input.GetKey(KeyCode.UpArrow)) {
-			this.transform.Rotate(Vector3.right, -1);
+			this.transform.Translate(Vector3.forward * 0.1);
 		}
 		if (Input.GetKey(KeyCode.DownArrow)) {
-			this.transform.Rotate(Vector3.right, 1);
+			this.transform.Translate(Vector3.back * 0.1);
 		}
 		if (Input.GetKey(KeyCode.LeftArrow)) {
 			this.transform.Rotate(Vector3.up, -1, Space.World);
@@ -31,22 +34,24 @@ function Update () {
 		if (Input.GetKey(KeyCode.RightArrow)) {
 			this.transform.Rotate(Vector3.up, 1, Space.World);
 		}
-		if (Input.GetKey(KeyCode.Space)) {
-			this.transform.rotation = Quaternion.Euler(0, 0, 0);
-		}
 	}
 	
-	var alpha = 0.8;
-	gravity = alpha * gravity + (1 - alpha) * Input.acceleration;
+	var alphaG = 0.8;
+	gravity = alphaG * gravity + (1 - alphaG) * Input.acceleration;
   	var linear_acceleration = Input.acceleration - gravity;
-  	acceleration = alpha * acceleration + (1 - alpha) * linear_acceleration;
+	var alphaA = 0.9;
+  	acceleration = alphaA * acceleration + (1 - alphaA) * linear_acceleration;
 
-	if (Time.realtimeSinceStartup > 2.0) {
+	if (Time.time - resetTime > 2.0) {
 		GetComponent(Rigidbody).AddForce(acceleration.x * 100, acceleration.y * 100, acceleration.z * -100, ForceMode.Acceleration);
 	}
 }
 
 function Reset() {
-	this.transform.rotation = Quaternion.Euler(30, 0, 0);
-	this.transform.position = Vector3(0, 2, -2);
+	transform.rotation = Quaternion.Euler(0, 0, 0);
+	transform.position = Vector3(0, 1, -2);
+	GetComponent(Rigidbody).angularVelocity = Vector3.zero;
+	GetComponent(Rigidbody).velocity = Vector3.zero;
+
+	resetTime = 0;
 }
