@@ -13,6 +13,7 @@ function Start () {
 		Input.gyro.enabled = true;
 	}
 	
+	Reset();
 	resetTime = Time.time;
 }
 
@@ -48,8 +49,8 @@ function Update () {
 }
 
 function Reset() {
-	transform.rotation = Quaternion.Euler(0, 0, 0);
-	transform.position = Vector3(0, 1, -2);
+	this.transform.rotation = Quaternion.Euler(0, 0, 0);
+	this.transform.position = Vector3(0, 1, -2);
 	GetComponent(Rigidbody).angularVelocity = Vector3.zero;
 	GetComponent(Rigidbody).velocity = Vector3.zero;
 
