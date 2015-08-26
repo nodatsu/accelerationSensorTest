@@ -37,11 +37,13 @@ function Update () {
 		}
 	}
 	
+	var input_acceleration = Input.acceleration;
+	input_acceleration.z *= -1;
 	var alphaG = 0.8;
-	gravity = alphaG * gravity + (1 - alphaG) * Input.acceleration;
-  	var linear_acceleration = Input.acceleration - gravity;
+	gravity = alphaG * gravity + (1 - alphaG) * input_acceleration;
+  	var linear_acceleration = input_acceleration - gravity;
 	var alphaA = 0.9;
-  	acceleration = alphaA * acceleration + (1 - alphaA) * linear_acceleration;
+   	acceleration = alphaA * acceleration + (1 - alphaA) * linear_acceleration;
 
 	if (Time.time - resetTime > 2.0) {
 		if (acceleration.magnitude > 0.05) {
