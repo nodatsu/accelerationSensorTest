@@ -44,7 +44,12 @@ function Update () {
   	acceleration = alphaA * acceleration + (1 - alphaA) * linear_acceleration;
 
 	if (Time.time - resetTime > 2.0) {
-		GetComponent(Rigidbody).AddForce(acceleration.x * 100, acceleration.y * 100, acceleration.z * -100, ForceMode.Acceleration);
+		if (acceleration.magnitude > 0.05) {
+
+			var acc = this.transform.localRotation * acceleration;			
+			GetComponent(Rigidbody).AddForce(acc.x * 1000, acc.y * 1000, acc.z * -1000, ForceMode.Acceleration);
+			resetTime = 0;
+		}
 	}
 }
 

@@ -22,8 +22,10 @@ function Update () {
   	var lenear_acceleration = Input.acceleration - gravity;
   	acceleration = alpha * acceleration + (1 - alpha) * lenear_acceleration;
 
-	next_position.x = position.x + acceleration.x * 10;
-	next_position.y = position.x + acceleration.y * 10;
-	next_position.z = position.z + acceleration.z * -10;
+	var acc = this.transform.localRotation * acceleration;			
+
+	next_position.x = position.x + acc.x * 10;
+	next_position.y = position.x + acc.y * 10;
+	next_position.z = position.z + acc.z * -10;
 	lineRenderer.SetPosition(1, next_position);
 }
