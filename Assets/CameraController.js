@@ -1,9 +1,5 @@
 ﻿#pragma strict
 
-var gravity: Vector3;
-var acceleration: Vector3;
-var resetTime: int;
-
 function Awake () {
 	Screen.sleepTimeout = SleepTimeout.NeverSleep;
 }
@@ -14,13 +10,14 @@ function Start () {
 	}
 	
 	Reset();
-	resetTime = Time.time;
 }
 
 function Update () {
 	if (Application.platform == RuntimePlatform.Android) {
 		var gyro: Quaternion = Input.gyro.attitude;
 		this.transform.localRotation = Quaternion.Euler(90, 0, 0) * (new Quaternion(-gyro.x, -gyro.y, gyro.z, gyro.w));
+
+		GetComponent(Rigidbody).AddForce(Input.gyro.userAcceleration * 100, ForceMode.Acceleration);
 	}
 	else if (Application.platform == RuntimePlatform.OSXEditor) {
 		if (Input.GetKey(KeyCode.UpArrow)) {
@@ -35,24 +32,7 @@ function Update () {
 		if (Input.GetKey(KeyCode.RightArrow)) {
 			this.transform.Rotate(Vector3.up, 1, Space.World);
 		}
-	}
-	
-	var input_acceleration = Input.acceleration;
-	input_acceleration.z *= -1;
-	var alphaG = 0.8;
-	gravity = alphaG * gravity + (1 - alphaG) * input_acceleration;
-  	var linear_acceleration = input_acceleration - gravity;
-	var alphaA = 0.9;
-   	acceleration = alphaA * acceleration + (1 - alphaA) * linear_acceleration;
-
-	if (Time.time - resetTime > 2.0) {
-		if (acceleration.magnitude > 0.05) {
-
-			var acc = this.transform.localRotation * acceleration;			
-			GetComponent(Rigidbody).AddForce(acc.x * 1000, acc.y * 1000, acc.z * -1000, ForceMode.Acceleration);
-			resetTime = 0;
-		}
-	}
+	}	
 }
 
 function Reset() {
@@ -60,6 +40,4 @@ function Reset() {
 	this.transform.position = Vector3(0, 1, -2);
 	GetComponent(Rigidbody).angularVelocity = Vector3.zero;
 	GetComponent(Rigidbody).velocity = Vector3.zero;
-
-	resetTime = 0;
 }
