@@ -32,7 +32,11 @@ function Update () {
 		if (Input.GetKey(KeyCode.RightArrow)) {
 			this.transform.Rotate(Vector3.up, 1, Space.World);
 		}
-	}	
+	}
+	
+	if (transform.position.magnitude > 5) {
+		GetComponent(Rigidbody).velocity = Vector3.zero;
+	} 
 }
 
 function Reset() {
