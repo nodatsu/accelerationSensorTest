@@ -1,7 +1,29 @@
-グラフ描画
+UnityのJSの特殊性
+
+	カンマ演算子が使えない
+
+	(参考) UnityのJavaScript
+	https://spphire9.wordpress.com/2011/05/26/unity%E3%81%AEjavascript/
+
+	for/ifでスコープが作られない
+
+	(参考) Unity の JavaScript でよくわからないことメモ
+	http://tanku.hatenablog.jp/entry/20120606/1338999149
+
+グラフ描画(1)
 
 	(参考) Graphs, visualizing data
 	http://catlikecoding.com/unity/tutorials/graphs/
+
+グラフ描画(2)
+
+	(1) emptyオブジェクト追加
+	(2) オブジェクトにMesh RendererとMesh Filterを追加
+	(3) グラフ用マテリアル追加(Sprites/Default)、グラフに適用
+	(4) グラフ用スクリプト作成
+		Meshオブジェクト作成、Mesh Filterのmeshに設定
+		Meshオブジェクトのvertices, uv, colorsを設定
+		頂点インデックスを作成(微小線分の端点対の順番、頂点数の倍の個数必要)、SetIndeicesでMeshTopology.Linesでメッシュオブジェクトに設定
 
 	(参考) 線ポリゴンを使って数学的グラフを描く
 	http://unitylab.wiki.fc2.com/wiki/線ポリゴンを使って数学的グラフを描く
@@ -33,13 +55,9 @@ TextMeshのZオーダーを制御
 	Time.realTimeSinceStartup ... Time.timeScaleの影響を受けない
 
 ★ 次ここ
-	パーティクルのグラフが見づらい -> 線ポリゴン?
 	グラフで分析
-
 	カメラの移動状況を俯瞰で見たい
 		別カメラの映像を表示?
-
-
 
 	カメラの移動範囲を制限する
 
