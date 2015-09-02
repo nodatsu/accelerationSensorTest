@@ -28,7 +28,7 @@ function Update () {
 	for (var i = resolution - 1; i > 0; i--) {
 		vertices[i].y = vertices[i - 1].y;
 	}
-	vertices[0].y = GameObject.Find("Main Camera").GetComponent(CameraController).translation.x / 10;
+	vertices[0].y = GameObject.Find("Main Camera").GetComponent(CameraController).translation.z / 10;
 	
 	mesh.Clear();
 	mesh.vertices = vertices;

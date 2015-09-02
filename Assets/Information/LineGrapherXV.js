@@ -1,7 +1,5 @@
 ﻿#pragma strict
 
-private var velocityX: float = 0;
-
 private var resolution: int = 200;
 private var mesh: Mesh;
 private var vertices = new Vector3[resolution];
@@ -27,12 +25,10 @@ function Start () {
 }
        
 function Update () {
-	velocityX += Input.gyro.userAcceleration.x * Time.deltaTime;
-
 	for (var i = resolution - 1; i > 0; i--) {
 		vertices[i].y = vertices[i - 1].y;
 	}
-	vertices[0].y = velocityX * 10;
+	vertices[0].y = GameObject.Find("Main Camera").GetComponent(CameraController).velocity.x / 10;
 
 	mesh.Clear();
 	mesh.vertices = vertices;

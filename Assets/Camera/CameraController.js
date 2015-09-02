@@ -1,7 +1,7 @@
 ﻿#pragma strict
 
-private var velocity = Vector3.zero;
-private var translation = Vector3.zero;
+var velocity = Vector3.zero;
+var translation = Vector3.zero;
 private var origin: Vector3;
 
 function Awake () {
@@ -11,8 +11,8 @@ function Awake () {
 function Start () {
 	if (Application.platform == RuntimePlatform.Android) {
 		Input.gyro.enabled = true;
-		origin = transform.position;
 	}
+	origin = transform.position;
 	
 	Reset();
 }
@@ -22,7 +22,7 @@ function Update () {
 		var gyro: Quaternion = Input.gyro.attitude;
 		this.transform.localRotation = Quaternion.Euler(90, 0, 0) * (new Quaternion(-gyro.x, -gyro.y, gyro.z, gyro.w));
 
-		velocity += Input.gyro.userAcceleration * Time.deltaTime;
+		velocity += Input.gyro.userAcceleration * Time.deltaTime * 10;
 		translation += velocity * Time.deltaTime;
 		transform.position = origin + translation;
 	}
@@ -42,13 +42,13 @@ function Update () {
 	}
 	
 	if (transform.position.magnitude > 5) {
-		GetComponent(Rigidbody).velocity = Vector3.zero;
+		velocity = Vector3.zero;
 	} 
 }
 
 function Reset() {
-	this.transform.rotation = Quaternion.Euler(0, 0, 0);
-	this.transform.position = Vector3(0, 1, -2);
-	GetComponent(Rigidbody).angularVelocity = Vector3.zero;
-	GetComponent(Rigidbody).velocity = Vector3.zero;
+	transform.rotation = Quaternion.Euler(0, 0, 0);
+	transform.position = origin;
+	velocity = Vector3.zero;
+	translation = Vector3.zero;
 }
