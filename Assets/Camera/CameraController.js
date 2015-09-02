@@ -1,7 +1,7 @@
 ﻿#pragma strict
 
+var acceleration = Vector3.zero;
 var velocity = Vector3.zero;
-var translation = Vector3.zero;
 private var origin: Vector3;
 
 function Awake () {
@@ -22,9 +22,18 @@ function Update () {
 		var gyro: Quaternion = Input.gyro.attitude;
 		this.transform.localRotation = Quaternion.Euler(90, 0, 0) * (new Quaternion(-gyro.x, -gyro.y, gyro.z, gyro.w));
 
-		velocity += Input.gyro.userAcceleration * Time.deltaTime * 10;
-		translation += velocity * Time.deltaTime;
-		transform.position = origin + translation;
+		var nextValue: Vector3;
+		acceleration = Input.gyro.userAcceleration;
+		acceleration.x *= -1;
+		acceleration.y *= -1;
+		nextValue = velocity + acceleration * Time.deltaTime * 10;
+		if (nextValue.magnitude < 5) {
+			velocity = nextValue;
+		}
+		nextValue = transform.position + velocity * Time.deltaTime;
+		if (nextValue.magnitude < 5) {
+			transform.position = nextValue;
+		}
 	}
 	else if (Application.platform == RuntimePlatform.OSXEditor) {
 		if (Input.GetKey(KeyCode.UpArrow)) {
@@ -40,15 +49,10 @@ function Update () {
 			this.transform.Rotate(Vector3.up, 1, Space.World);
 		}
 	}
-	
-	if (transform.position.magnitude > 5) {
-		velocity = Vector3.zero;
-	} 
 }
 
 function Reset() {
 	transform.rotation = Quaternion.Euler(0, 0, 0);
 	transform.position = origin;
 	velocity = Vector3.zero;
-	translation = Vector3.zero;
 }

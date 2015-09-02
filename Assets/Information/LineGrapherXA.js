@@ -28,7 +28,7 @@ function Update () {
 	for (var i = resolution - 1; i > 0; i--) {
 		vertices[i].y = vertices[i - 1].y;
 	}
-	vertices[0].y = Input.gyro.userAcceleration.x;
+	vertices[0].y = GameObject.Find("Main Camera").GetComponent(CameraController).acceleration.x;
 
 	mesh.Clear();
 	mesh.vertices = vertices;
