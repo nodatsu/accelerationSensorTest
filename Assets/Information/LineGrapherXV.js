@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+private var velocityX: float = 0;
+
 private var resolution: int = 200;
 private var mesh: Mesh;
 private var vertices = new Vector3[resolution];
@@ -15,7 +17,7 @@ function Start () {
 	for (var i: int = 0; i < vertices.Length; i++) {
 		vertices[i] = new Vector3(increment * i, 0, 0);
 		uvs[i]=Vector2.zero;
-		pointColor[i]=Color.blue;
+		pointColor[i]=Color.green;
 	}
 	
 	for (i = 0; i < lines.Length; i += 2) {
@@ -25,10 +27,12 @@ function Start () {
 }
        
 function Update () {
+	velocityX += Input.gyro.userAcceleration.x * Time.deltaTime;
+
 	for (var i = resolution - 1; i > 0; i--) {
 		vertices[i].y = vertices[i - 1].y;
 	}
-	vertices[0].y = Input.gyro.userAcceleration.z;
+	vertices[0].y = velocityX * 10;
 
 	mesh.Clear();
 	mesh.vertices = vertices;

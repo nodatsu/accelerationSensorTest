@@ -1,5 +1,8 @@
 ﻿#pragma strict
 
+private var velocityX: float = 0;
+private var translationX: float = 0;
+
 private var resolution: int = 200;
 private var mesh: Mesh;
 private var vertices = new Vector3[resolution];
@@ -25,10 +28,13 @@ function Start () {
 }
        
 function Update () {
+	velocityX += Input.gyro.userAcceleration.x * Time.deltaTime;
+	translationX += velocityX * Time.deltaTime;
+
 	for (var i = resolution - 1; i > 0; i--) {
 		vertices[i].y = vertices[i - 1].y;
 	}
-	vertices[0].y = Input.gyro.userAcceleration.z;
+	vertices[0].y = translationX * 10;
 
 	mesh.Clear();
 	mesh.vertices = vertices;

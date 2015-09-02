@@ -14,24 +14,14 @@ function Start () {
 	var increment: float =  1.0 / (resolution - 1);	
 	for (var i: int = 0; i < vertices.Length; i++) {
 		vertices[i] = new Vector3(increment * i, 0, 0);
+		uvs[i]=Vector2.zero;
+		pointColor[i]=Color.green;
 	}
 	
-	init();
-}
-
-function init () {
-	var i: int;
-
 	for (i = 0; i < lines.Length; i += 2) {
 		lines[i] = i / 2;
 		lines[i + 1] = i / 2 + 1;
 	}
-
-	for (i = 0; i < vertices.Length; i++) {
-		uvs[i]=Vector2.zero;
-		pointColor[i]=Color.green;
-	}
-
 }
        
 function Update () {
