@@ -1,3 +1,15 @@
+Unity Androidアプリの終了(ホームボタンで終了)
+
+	(参考) Unity Androidアプリの「戻るボタン」でゲームを終了させる
+	http://gupuru.hatenablog.jp/entry/2014/05/16/204102
+
+		-> xperia SO-03Cではうまくいかない
+
+	(参考) Unity バックグラウンドへの移行と復帰を検知する方法
+	http://programming-ios.com/unity-background-detect/
+
+		-> うまくいく
+
 UnityのJSの特殊性
 
 	カンマ演算子が使えない
