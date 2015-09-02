@@ -1,5 +1,9 @@
 ﻿#pragma strict
 
+private var velocity = Vector3.zero;
+private var translation = Vector3.zero;
+private var origin: Vector3;
+
 function Awake () {
 	Screen.sleepTimeout = SleepTimeout.NeverSleep;
 }
@@ -7,6 +11,7 @@ function Awake () {
 function Start () {
 	if (Application.platform == RuntimePlatform.Android) {
 		Input.gyro.enabled = true;
+		origin = transform.position;
 	}
 	
 	Reset();
@@ -17,7 +22,9 @@ function Update () {
 		var gyro: Quaternion = Input.gyro.attitude;
 		this.transform.localRotation = Quaternion.Euler(90, 0, 0) * (new Quaternion(-gyro.x, -gyro.y, gyro.z, gyro.w));
 
-		GetComponent(Rigidbody).AddForce(Input.gyro.userAcceleration * 100, ForceMode.Acceleration);
+		velocity += Input.gyro.userAcceleration * Time.deltaTime;
+		translation += velocity * Time.deltaTime;
+		transform.position = origin + translation;
 	}
 	else if (Application.platform == RuntimePlatform.OSXEditor) {
 		if (Input.GetKey(KeyCode.UpArrow)) {
