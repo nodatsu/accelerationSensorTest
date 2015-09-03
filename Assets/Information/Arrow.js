@@ -15,6 +15,8 @@ function Start() {
 }
 
 function Update () {
-	next_position = GameObject.Find("Main Camera").GetComponent(CameraController).velocity;
+//	next_position = GameObject.Find("Main Camera").GetComponent(CameraController).velocity;
+//	next_position = Input.gyro.rotationRate * 100;
+	next_position = Input.gyro.gravity;
 	lineRenderer.SetPosition(1, next_position);
 }

@@ -24,8 +24,8 @@ function Update () {
 
 		var nextValue: Vector3;
 		acceleration = Input.gyro.userAcceleration;
-		acceleration.x *= -1;
 		acceleration.y *= -1;
+		acceleration.z *= -1;
 		nextValue = velocity + acceleration * Time.deltaTime * 10;
 		if (nextValue.magnitude < 5) {
 			velocity = nextValue;
